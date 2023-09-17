@@ -1,1 +1,4 @@
-colcon_build.txt
+Starting >>> ROS     
+Finished <<< ROS [0.47s]                  
+
+Summary: 1 package finished [1.09s]
