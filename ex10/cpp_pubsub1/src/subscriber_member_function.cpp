@@ -14,7 +14,7 @@
 
 #include <functional>
 #include <memory>
-
+#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -26,7 +26,7 @@ public:
   MinimalSubscriber()
   : Node("text_to_cmd_vel")
   {
-subscription_ = this->create_subscription<std_msgs::msg::String>("cmd_text", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1)); 
+subscription_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_text", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1)); 
     
   }
 
@@ -51,9 +51,9 @@ geometry_msgs::Twist twist; // создаем сообщение типа Twist
         twist.angular.z = 0;
 }
 
+self.publisher_.publish(twist) // публикуем сообщение
 
 
- self.publisher_.publish(twist) // публикуем сообщение
 //    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
   }
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;

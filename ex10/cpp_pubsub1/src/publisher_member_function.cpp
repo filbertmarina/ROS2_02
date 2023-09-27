@@ -31,7 +31,7 @@ public:
   MinimalPublisher()
   : Node("text_to_cmd_vel")
   {
-    publisher_ = this->create_publisher<msg::Twist>("/turtle1/cmd_vel", 10); 
+    publisher_ = this->create_publisher<std_msgs::msg::String>("/turtle1/cmd_vel", 10); 
     timer_ = this->create_wall_timer(
       500ms, std::bind(&MinimalPublisher::timer_callback, this));
   }
@@ -40,7 +40,6 @@ private:
   void timer_callback()
   {
     auto message = std_msgs::msg::String();
-    message.data = std::cin>>strin_;
 //    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
     publisher_->publish(message);
   }
@@ -48,6 +47,8 @@ private:
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   size_t strin_;
 };
+
+
 
 int main(int argc, char * argv[])
 {
