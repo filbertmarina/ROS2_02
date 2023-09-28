@@ -34,24 +34,24 @@ private:
   void topic_callback(const std_msgs::msg::String & msg) const
   {
 geometry_msgs::msg::Twist twist; // создаем сообщение типа Twist
-    if ( msg->data.c_str()== "turn_right") { // если сообщение содержит строку "turn_right", поворачиваем направо
+    if (  msg.data.compare("turn_right")==0) { // если сообщение содержит строку "turn_right", поворачиваем направо
         twist.linear.x = 0; // заполняем сообщение
         twist.angular.z = -1.5;
 }
-    if ( msg->data.c_str()== "turn_left") { // если сообщение содержит строку >
+    if ( msg.data.compare("turn_left")==0) { // если сообщение содержит строку >
         twist.linear.x = 0; // заполняем сообщение
         twist.angular.z = 1.5;
 }
-    if ( msg->data.c_str()== "move_forward") { // если сообщение содержит строку >
+    if (  msg.data.compare("move_forward")==0) { // если сообщение содержит строку >
         twist.linear.x = 1; // заполняем сообщение
         twist.angular.z = 0;
 }
-    if ( msg->data.c_str()== "move_backward") { // если сообщение содержит строку >
+    if (  msg.data.compare("move_backward")==0) { // если сообщение содержит строку >
         twist.linear.x = -1; // заполняем сообщение
         twist.angular.z = 0;
 }
 
-self.publisher_.publish(twist) // публикуем сообщение
+publisher_->publish(twist); // публикуем сообщение
 
 
 //    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
