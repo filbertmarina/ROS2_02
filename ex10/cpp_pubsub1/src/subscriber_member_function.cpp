@@ -26,14 +26,14 @@ public:
   MinimalSubscriber()
   : Node("text_to_cmd_vel")
   {
-subscription_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_text", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1)); 
-    
+subscription_ = this->create_subscription<std_msgs::msg::String>("cmd_text", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1)); 
+publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/turtle1/cmd_vel", 10);  // название топика и длина очереди (сколько сообщений хранится в памяти)
   }
 
 private:
   void topic_callback(const std_msgs::msg::String & msg) const
   {
-geometry_msgs::Twist twist; // создаем сообщение типа Twist
+geometry_msgs::msg::Twist twist; // создаем сообщение типа Twist
     if ( msg->data.c_str()== "turn_right") { // если сообщение содержит строку "turn_right", поворачиваем направо
         twist.linear.x = 0; // заполняем сообщение
         twist.angular.z = -1.5;
@@ -57,6 +57,7 @@ self.publisher_.publish(twist) // публикуем сообщение
 //    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str());
   }
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
 };
 
 int main(int argc, char * argv[])
